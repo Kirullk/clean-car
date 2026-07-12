@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои записи{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h2 class="fw-bold text-dark mb-4">Мои записи</h2>
+    
+    {% if appointments %}
+        {% for appointment in appointments %}
+        <div class="card border-dark border-2 mb-3">
+            <div class="card-body">
+                <p><span class="fw-bold">Услуга:</span> {{ appointment.service.name }}</p>
+                <p><span class="fw-bold">Дата:</span> {{ appointment.date|date:"d.m.Y H:i" }}</p>
+                <p><span class="fw-bold">Бокс:</span> {{ appointment.box.number }}</p>
+                <p><span class="fw-bold">Мойщик:</span> {{ appointment.washer.name }}</p>
+                <p><span class="fw-bold">Статус:</span> {{ appointment.get_status_display }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-secondary">У вас пока нет записей</p>
+        <a href="{% url 'index' %}" class="btn btn-dark">Записаться</a>
+    {% endif %}
+</div>
+{% endblock %}

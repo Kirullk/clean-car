@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Запись на {{ service.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-dark border-2 bg-white">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4 fw-bold text-dark">{{ service.name }}</h2>
+                    <form method="post">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% bootstrap_button button_type="submit" content="Далее" button_class="btn-dark w-100" %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

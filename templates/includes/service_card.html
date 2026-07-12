@@ -1,0 +1,29 @@
+<a href="{% url 'times' service.id %}" class="text-decoration-none text-dark">
+    <div class="col">
+        <div class="card h-100 border-dark border-2">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">{{ service.name }}</h5>
+                <p class="card-text text-secondary">{{ service.description|truncatechars:100 }}</p>
+                
+                <ul class="list-unstyled">
+                    <li class="mb-1">
+                        <span class="fw-bold">💰 Цена:</span> 
+                        {{ service.price }} руб.
+                    </li>
+                    <li class="mb-1">
+                        <span class="fw-bold">⏱️ Время:</span> 
+                        {{ service.average_time|time:"H:i" }}
+                    </li>
+                    <li>
+                        <span class="fw-bold">👤 Категории мойщиков:</span>
+                        {% for category in service.washer_category.all %}
+                            <span class="badge bg-dark">{{ category.get_name_display }}</span>
+                        {% empty %}
+                            <span class="text-secondary">Не указаны</span>
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</a>

@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #ffffff; border-bottom: 2px solid #1a1a1a;">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'index' %}" style="color: #1a1a1a; font-size: 26px;">
+            Автомойка
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                style="border-color: #1a1a1a;">
+            <span class="navbar-toggler-icon" style="filter: none;"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'index' %}" 
+                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
+                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                           onmouseout="this.style.borderBottomColor='transparent'">
+                            Главная
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'times' %}" 
+                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
+                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                           onmouseout="this.style.borderBottomColor='transparent'">
+                            Выбрать время
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'my_appointments' %}" 
+                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
+                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                           onmouseout="this.style.borderBottomColor='transparent'">
+                            Мои записи 
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link border-0 bg-transparent"
+                                    style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s; padding: 8px 0; cursor: pointer;"
+                                    onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                                    onmouseout="this.style.borderBottomColor='transparent'">
+                                Выйти
+                            </button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}"
+                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
+                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                           onmouseout="this.style.borderBottomColor='transparent'">
+                            Войти
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}"
+                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
+                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                           onmouseout="this.style.borderBottomColor='transparent'">
+                            Регистрация
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Выбор времени — {{ object.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <!-- Заголовок -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto text-center">
+            <h1 class="fw-bold text-dark mb-3">{{ object.name }}</h1>
+            <p class="text-secondary">{{ object.description|truncatechars:200 }}</p>
+            <p class="text-secondary small">
+                ⏱️ {{ object.average_time|time:"H:i" }} · 💰 {{ object.price }} руб.
+            </p>
+        </div>
+    </div>
+
+    <!-- Выбор бокса -->
+    <div class="row mb-4">
+        <div class="col-md-6 mx-auto">
+            <div class="card border-dark border-2 bg-white">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-dark mb-3">Выберите бокс</h5>
+                    <form method="get" class="d-flex gap-2">
+                        <select name="box_id" class="form-select border-dark">
+                            {% for box in boxes %}
+                            <option value="{{ box.id }}" {% if box.id == selected_box.id %}selected{% endif %}>
+                                Бокс {{ box.number }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="date" value="{{ selected_date|date:'Y-m-d' }}">
+                        <button type="submit" class="btn btn-dark">Выбрать</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Выбор даты -->
+    <div class="row mb-4">
+        <div class="col-md-8 mx-auto">
+            <div class="card border-dark border-2 bg-white">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold text-dark mb-3">Выберите дату</h5>
+                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                        {% for date in dates %}
+                        <a href="?box_id={{ selected_box.id }}&date={{ date|date:'Y-m-d' }}" 
+                           class="btn {% if date == selected_date %}btn-dark{% else %}btn-outline-dark{% endif %}">
+                            {{ date|date:"d.m" }}
+                            <small class="d-block text-secondary" style="font-size: 10px;">
+                                {{ date|date:"D" }}
+                            </small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Слоты -->
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <div class="card border-dark border-2 bg-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title fw-bold text-dark mb-0">
+                            Доступное время
+                            <span class="badge bg-dark ms-2">{{ available_slots|length }}</span>
+                        </h5>
+                        {% if washer %}
+                        <span class="text-secondary small">
+                            👤 Мойщик: {{ washer.name }}
+                            <span class="badge bg-secondary">Категория: {{ washer.category.get_name_display }}</span>
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    {% if available_slots %}
+                    <div class="d-flex flex-wrap gap-2 justify-content-center">
+                        {% for slot, washer_obj in available_slots %}
+                        <a href="?slot={{ slot.isoformat }}&box_id={{ selected_box.id }}&washer={{ washer_obj.id }}"
+                           class="btn btn-outline-dark 
+                                  {% if slot|time:'H:i' == request.GET.slot %}active btn-dark{% endif %}"
+                           style="min-width: 80px;">
+                            {{ slot|time:"H:i" }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-center text-secondary mb-0">
+                        Нет доступных слотов на выбранную дату
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Кнопка назад -->
+    <div class="row mt-4">
+        <div class="col-md-6 mx-auto text-center">
+            <a href="{% url 'index' %}" class="btn btn-outline-dark">
+                ← Вернуться к услугам
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

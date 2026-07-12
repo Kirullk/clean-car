@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Услуги{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1 class="text-center mb-4 fw-bold">Наши услуги</h1>
+    
+    {% if page_obj %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for service in services %}
+            {% include 'wash/service_card.html' %}
+        {% endfor %}
+    </div>
+
+    {% if page_obj.paginator.num_pages > 1 %}
+
+    {% endif %}
+        {% include 'wash/pagination.html' %}
+    {% else %}
+        <p class="text-center text-secondary">Услуги временно недоступны</p>
+    {% endif %}
+</div>
+{% endblock %}

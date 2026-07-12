@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Выход{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card border-dark border-2 bg-white">
+            <div class="card-body text-center">
+                <h2 class="card-title mb-4 text-dark fw-bold">Вы вышли</h2>
+                <p class="text-secondary">Спасибо, что были с нами</p>
+                <a href="{% url 'login' %}" class="btn btn-dark w-100">Войти снова</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
