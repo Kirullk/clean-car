@@ -11,22 +11,6 @@
             <ul class="navbar-nav ms-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'index' %}" 
-                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
-                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
-                           onmouseout="this.style.borderBottomColor='transparent'">
-                            Главная
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'times' %}" 
-                           style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
-                           onmouseover="this.style.borderBottomColor='#1a1a1a'"
-                           onmouseout="this.style.borderBottomColor='transparent'">
-                            Выбрать время
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'my_appointments' %}" 
                            style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
                            onmouseover="this.style.borderBottomColor='#1a1a1a'"
@@ -34,6 +18,16 @@
                             Мои записи 
                         </a>
                     </li>
+                    {% if user.is_washer %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_washer' %}" 
+                            style="color: #1a1a1a; font-weight: 500; border-bottom: 2px solid transparent; transition: all 0.2s;"
+                            onmouseover="this.style.borderBottomColor='#1a1a1a'"
+                            onmouseout="this.style.borderBottomColor='transparent'">
+                                Кабинет мойщика 
+                            </a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <form method="post" action="{% url 'logout' %}" class="d-inline">
                             {% csrf_token %}

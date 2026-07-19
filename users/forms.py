@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate
 from .models import User
 
+
 class CustomUserCreationForm(UserCreationForm):
     """Форма создания пользователя с email вместо username"""
 

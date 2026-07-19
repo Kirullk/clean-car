@@ -1,0 +1,327 @@
+[
+  {
+    "model": "wash.box",
+    "pk": "A1",
+    "fields": {
+      "status": "working",
+      "max_height": "2.50"
+    }
+  },
+  {
+    "model": "wash.box",
+    "pk": "A2",
+    "fields": {
+      "status": "working",
+      "max_height": "2.80"
+    }
+  },
+  {
+    "model": "wash.box",
+    "pk": "B1",
+    "fields": {
+      "status": "working",
+      "max_height": "3.00"
+    }
+  },
+  {
+    "model": "wash.box",
+    "pk": "B2",
+    "fields": {
+      "status": "not_working",
+      "max_height": "2.20"
+    }
+  },
+  {
+    "model": "wash.box",
+    "pk": "B3",
+    "fields": {
+      "status": "working",
+      "max_height": "2.60"
+    }
+  },
+  {
+    "model": "wash.washercategory",
+    "pk": 1,
+    "fields": {
+      "name": "intern"
+    }
+  },
+  {
+    "model": "wash.washercategory",
+    "pk": 2,
+    "fields": {
+      "name": "specialist"
+    }
+  },
+  {
+    "model": "wash.washercategory",
+    "pk": 3,
+    "fields": {
+      "name": "senior"
+    }
+  },
+  {
+    "model": "wash.shifttype",
+    "pk": 1,
+    "fields": {
+      "name": "2_2"
+    }
+  },
+  {
+    "model": "wash.shifttype",
+    "pk": 2,
+    "fields": {
+      "name": "5_2"
+    }
+  },
+  {
+    "model": "wash.shifttype",
+    "pk": 3,
+    "fields": {
+      "name": "3_3"
+    }
+  },
+  {
+    "model": "wash.shifttype",
+    "pk": 4,
+    "fields": {
+      "name": "6_1"
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 1,
+    "fields": {
+      "day": 0,
+      "open_time": "09:00:00",
+      "close_time": "21:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 2,
+    "fields": {
+      "day": 1,
+      "open_time": "09:00:00",
+      "close_time": "21:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 3,
+    "fields": {
+      "day": 2,
+      "open_time": "09:00:00",
+      "close_time": "21:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 4,
+    "fields": {
+      "day": 3,
+      "open_time": "09:00:00",
+      "close_time": "21:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 5,
+    "fields": {
+      "day": 4,
+      "open_time": "09:00:00",
+      "close_time": "21:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 6,
+    "fields": {
+      "day": 5,
+      "open_time": "10:00:00",
+      "close_time": "20:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.workinghours",
+    "pk": 7,
+    "fields": {
+      "day": 6,
+      "open_time": "10:00:00",
+      "close_time": "18:00:00",
+      "is_working": true
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 1,
+    "fields": {
+      "name": "Экспресс-мойка кузова",
+      "description": "Быстрая мойка кузова без сушки. Идеально для поддержания чистоты.",
+      "is_active": true,
+      "average_time": "00:20:00",
+      "boxes": ["A1", "A2"],
+      "price": "500.00",
+      "washer_category": [1, 2],
+      "created_at": "2024-01-15T10:00:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 2,
+    "fields": {
+      "name": "Полная мойка с химчисткой",
+      "description": "Мойка кузова + химчистка салона. Полный комплекс для чистоты авто.",
+      "is_active": true,
+      "average_time": "01:30:00",
+      "boxes": ["A1", "B2"],
+      "price": "2500.00",
+      "washer_category": [2, 3],
+      "created_at": "2024-01-15T10:30:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 3,
+    "fields": {
+      "name": "Полировка кузова",
+      "description": "Восстановление лакокрасочного покрытия. Удаляет царапины и придает блеск.",
+      "is_active": true,
+      "average_time": "02:00:00",
+      "boxes": ["A2", "B1"],
+      "price": "3500.00",
+      "washer_category": [2, 3],
+      "created_at": "2024-01-15T11:00:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 4,
+    "fields": {
+      "name": "Мойка двигателя",
+      "description": "Очистка моторного отсека паром. Бережная и эффективная очистка.",
+      "is_active": true,
+      "average_time": "00:45:00",
+      "boxes": ["A1"],
+      "price": "1500.00",
+      "washer_category": [1, 2],
+      "created_at": "2024-01-15T11:30:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 5,
+    "fields": {
+      "name": "Комплексная мойка",
+      "description": "Мойка кузова + химчистка + полировка. Максимальный уход за авто.",
+      "is_active": true,
+      "average_time": "03:00:00",
+      "boxes": ["A2", "B1", "B3"],
+      "price": "5000.00",
+      "washer_category": [3],
+      "created_at": "2024-01-15T12:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "washer1",
+      "password": "pbkdf2_sha256$...",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "washer2",
+      "password": "pbkdf2_sha256$...",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "washer3",
+      "password": "pbkdf2_sha256$...",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "washer4",
+      "password": "pbkdf2_sha256$...",
+      "is_active": true,
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "name": "Иван Петров",
+      "is_active": true,
+      "category": 1,
+      "hire_date": "2024-01-15",
+      "phone": "+79991112233",
+      "shift_type": 1
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "name": "Алексей Смирнов",
+      "is_active": true,
+      "category": 2,
+      "hire_date": "2024-03-20",
+      "phone": "+79994445566",
+      "shift_type": 2
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "name": "Мария Иванова",
+      "is_active": true,
+      "category": 3,
+      "hire_date": "2023-10-01",
+      "phone": "+79997778899",
+      "shift_type": 1
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "name": "Дмитрий Козлов",
+      "is_active": false,
+      "category": 2,
+      "hire_date": "2024-05-10",
+      "phone": "+79990001122",
+      "shift_type": 3
+    }
+  }
+]

@@ -7,20 +7,12 @@
                 
                 <ul class="list-unstyled">
                     <li class="mb-1">
-                        <span class="fw-bold">💰 Цена:</span> 
+                        <span class="fw-bold">Цена:</span> 
                         {{ service.price }} руб.
                     </li>
                     <li class="mb-1">
-                        <span class="fw-bold">⏱️ Время:</span> 
+                        <span class="fw-bold">Время мойки:</span> 
                         {{ service.average_time|time:"H:i" }}
-                    </li>
-                    <li>
-                        <span class="fw-bold">👤 Категории мойщиков:</span>
-                        {% for category in service.washer_category.all %}
-                            <span class="badge bg-dark">{{ category.get_name_display }}</span>
-                        {% empty %}
-                            <span class="text-secondary">Не указаны</span>
-                        {% endfor %}
                     </li>
                 </ul>
             </div>

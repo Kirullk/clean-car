@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}Мой кабинет{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <h1 class="fw-bold text-dark mb-4">Мой кабинет</h1>
+
+            <!-- Информация о мойщике -->
+            <div class="card border-dark border-2 mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="card-title fw-bold">{{ washer.name }}</h5>
+                            <p class="card-text">
+                                <strong>Категория:</strong> {{ washer.category.get_name_display }}<br>
+                                <strong>Телефон:</strong> {{ washer.phone|default:"Не указан" }}<br>
+                                <strong>Тип смены:</strong> {{ washer.shift_type.get_name_display }}
+                            </p>
+                            <a href="{% url 'washer_edit' %}" class="btn btn-outline-dark">Изменить данные</a>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <span class="badge bg-dark p-2">
+                                Актуальных: {{ actual_appointments|length }}
+                            </span>
+                            <span class="badge bg-secondary p-2 ms-1">
+                                Прошедших: {{ not_actual_appointments.paginator.count }}
+                            </span>
+                            <p class="text-secondary small mt-2">
+                                <strong>Дата приема:</strong> {{ washer.hire_date|date:"d.m.Y" }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Актуальные записи -->
+            <div class="card border-dark border-2 mb-4">
+                <div class="card-body">
+                    <h5 class="card-title fw-bold mb-3">
+                        🟢 Актуальные записи
+                        <span class="badge bg-dark ms-2">{{ actual_appointments|length }}</span>
+                    </h5>
+
+                    {% if actual_appointments %}
+                        <div class="list-group">
+                            {% for appointment in actual_appointments %}
+                                <div class="list-group-item border-dark">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                        <div>
+                                            <strong>{{ appointment.date|date:"d.m.Y H:i" }}</strong>
+                                            <span class="mx-2">—</span>
+                                            {{ appointment.service.name }}
+                                            <span class="badge bg-secondary ms-2">
+                                                Бокс {{ appointment.box.number }}
+                                            </span>
+                                        </div>
+                                        <div class="text-secondary small">
+                                            {{ appointment.client_name }}
+                                            ({{ appointment.phone_number }})
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-center text-secondary mb-0">
+                            Нет актуальных записей
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Прошедшие записи -->
+            <div class="card border-dark border-2 mb-4">
+                <div class="card-body">
+                    <form method="get" class="d-flex gap-2 flex-wrap">
+                        <input type="date" name="filter_date" class="form-control border-dark" 
+                            value="{{ request.GET.filter_date }}" style="max-width: 200px;">
+                        <button type="submit" class="btn btn-dark">Фильтр</button>
+                        {% if request.GET.filter_date %}
+                            <a href="{% url 'my_washer' %}" class="btn btn-outline-dark">Сбросить</a>
+                        {% endif %}
+                    </form>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title fw-bold mb-3">
+                        ⏳ Прошедшие записи
+                        <span class="badge bg-secondary ms-2">{{ not_actual_appointments.paginator.count }}</span>
+                    </h5>
+
+                    {% if not_actual_appointments %}
+                        <div class="list-group">
+                            {% for appointment in not_actual_appointments %}
+                                <div class="list-group-item border-dark opacity-75">
+                                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                        <div>
+                                            <strong>{{ appointment.date|date:"d.m.Y H:i" }}</strong>
+                                            <span class="mx-2">—</span>
+                                            {{ appointment.service.name }}
+                                            <span class="badge bg-secondary ms-2">
+                                                Бокс {{ appointment.box.number }}
+                                            </span>
+                                            <span class="badge bg-danger ms-1">Завершена</span>
+                                        </div>
+                                        <div class="text-secondary small">
+                                            {{ appointment.client_name }}
+                                            ({{ appointment.phone_number }})
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- Пагинация для прошедших записей -->
+                        {% if not_actual_appointments.has_other_pages %}
+                            <nav class="mt-3">
+                                <ul class="pagination justify-content-center">
+                                    {% if not_actual_appointments.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link text-dark" href="?page_history=1">«</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link text-dark" href="?page_history={{ not_actual_appointments.previous_page_number }}">Назад</a>
+                                        </li>
+                                    {% endif %}
+
+                                    <li class="page-item active">
+                                        <span class="page-link bg-dark border-dark">
+                                            {{ not_actual_appointments.number }} / {{ not_actual_appointments.paginator.num_pages }}
+                                        </span>
+                                    </li>
+
+                                    {% if not_actual_appointments.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link text-dark" href="?page_history={{ not_actual_appointments.next_page_number }}">Вперед</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link text-dark" href="?page_history={{ not_actual_appointments.paginator.num_pages }}">»</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </nav>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-center text-secondary mb-0">
+                            Нет записей
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Кнопка назад -->
+            <div class="mt-4 text-center">
+                <a href="{% url 'index' %}" class="btn btn-outline-dark">← Вернуться к услугам</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

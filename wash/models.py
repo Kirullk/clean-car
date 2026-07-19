@@ -34,7 +34,7 @@ class Box(models.Model):
         ordering = ('number',)
 
     def __str__(self):
-        return f'Бокс {self.number} - {self.get_status_display()}'
+        return f'Бокс {self.number}'
 
 
 class WasherCategory(models.Model):
@@ -70,9 +70,9 @@ class Service(models.Model):
         'Активна',
         default=True
     )
-    average_time = models.DurationField(
+    average_time = models.TimeField(
         'Среднее время выполнения',
-        help_text='Формат: ЧЧ:ММ:СС'
+        help_text='Формат: ЧЧ:ММ'
     )
     boxes = models.ManyToManyField(
         Box,
@@ -118,6 +118,13 @@ class WorkingHours(models.Model):
     open_time = models.TimeField('Время открытия')
     close_time = models.TimeField('Время закрытия')
     is_working = models.BooleanField('Рабочий день', default=True)
+
+    class Meta:
+        verbose_name = 'День недели'
+        verbose_name_plural = 'Дни недели'
+
+    def __str__(self):
+        return self.get_day_display()
 
 
 class ShiftType(models.Model):
@@ -167,11 +174,14 @@ class Washer(models.Model):
         'Дата приема',
         auto_now_add=True
     )
-    phone = models.CharField(
+    phone = PhoneNumberField(
         'Телефон',
-        max_length=15,
-        blank=True,
-        null=True
+        region='RU',
+        error_messages={
+            'invalid': 'Введите корректный номер телефона в формате +79991234567',
+            'max_length': 'Номер телефона слишком длинный',
+            'min_length': 'Номер телефона слишком короткий',
+        }
     )
     shift_type = models.ForeignKey(
         ShiftType,
@@ -251,4 +261,4 @@ class Appointment(models.Model):
         unique_together = ('service', 'date', 'box',)
 
     def __str__(self):
-        return f'{self.client_name} — {self.service.name} — {self.time.strftime("%d.%m.%Y %H:%M")}'
+        return f'{self.client_name} — {self.service.name} — {self.date.strftime("%d.%m.%Y %H:%M")}'
