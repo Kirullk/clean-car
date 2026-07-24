@@ -1,1 +1,4 @@
-BREAKTIME = 15
+from datetime import timedelta
+
+
+BREAKTIME = timedelta(minutes=15)

@@ -4,23 +4,82 @@
 
 {% block content %}
 <div class="container py-4">
-    <h2 class="fw-bold text-dark mb-4">Мои записи</h2>
+    <h2 class="fw-bold text-dark mb-4" style="font-size: 2.2rem; letter-spacing: -0.5px;">Мои записи</h2>
     
     {% if appointments %}
         {% for appointment in appointments %}
         <div class="card border-dark border-2 mb-3">
-            <div class="card-body">
-                <p><span class="fw-bold">Услуга:</span> {{ appointment.service.name }}</p>
-                <p><span class="fw-bold">Дата:</span> {{ appointment.date|date:"d.m.Y H:i" }}</p>
-                <p><span class="fw-bold">Бокс:</span> {{ appointment.box.number }}</p>
-                <p><span class="fw-bold">Мойщик:</span> {{ appointment.washer.name }}</p>
-                <p><span class="fw-bold">Статус:</span> {{ appointment.get_status_display }}</p>
+            <div class="card-body" style="font-size: 1.05rem;">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h5 class="fw-bold text-dark">{{ appointment.service.name }}</h5>
+                        <p class="mb-1">
+                            <span class="fw-bold">📅 Дата и время:</span> 
+                            {{ appointment.date|date:"d.m.Y H:i" }}
+                        </p>
+                        <p class="mb-1">
+                            <span class="fw-bold">📌 Бокс:</span> {{ appointment.box.number }}
+                        </p>
+                        <p class="mb-0">
+                            <span class="fw-bold">👤 Мойщик:</span> {{ appointment.washer.name }}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
         {% endfor %}
+
+        <!-- Пагинация -->
+        {% if page_obj.has_other_pages %}
+        <nav aria-label="Пагинация">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link text-dark border-dark" href="?page=1">&laquo;</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-dark border-dark" href="?page={{ page_obj.previous_page_number }}">Назад</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link border-dark">&laquo;</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link border-dark">Назад</span>
+                </li>
+                {% endif %}
+
+                <li class="page-item active">
+                    <span class="page-link bg-dark border-dark">
+                        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
+                </li>
+
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link text-dark border-dark" href="?page={{ page_obj.next_page_number }}">Вперед</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link text-dark border-dark" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <span class="page-link border-dark">Вперед</span>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link border-dark">&raquo;</span>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
     {% else %}
-        <p class="text-secondary">У вас пока нет записей</p>
-        <a href="{% url 'index' %}" class="btn btn-dark">Записаться</a>
+        <div class="text-center py-5">
+            <p class="text-secondary mb-3" style="font-size: 1.2rem;">У вас пока нет записей</p>
+            <a href="{% url 'index' %}" class="btn btn-dark fw-bold" style="padding: 12px 30px;">
+                Записаться
+            </a>
+        </div>
     {% endif %}
 </div>
 {% endblock %}

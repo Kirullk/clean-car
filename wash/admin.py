@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import (
     Box, WasherCategory, Service, WorkingHours,
-    ShiftType, Washer, Appointment
+    ShiftType, Washer, Appointment, WasherSchedule
 )
 
 
@@ -120,6 +120,17 @@ class AppointmentAdmin(admin.ModelAdmin):
     )
 
     def get_readonly_fields(self, request, obj=None):
-        if obj:  # При редактировании
-            return self.readonly_fields + ('client', 'service', 'date', 'box', 'washer')
+        if obj:
+            return self.readonly_fields + (
+                'client', 'service', 'date', 'box', 'washer'
+                )
         return self.readonly_fields
+
+
+@admin.register(WasherSchedule)
+class WasherScheduleAdmin(admin.ModelAdmin):
+    list_display = ['washer', 'date', 'is_working', 'note']
+    list_filter = ['is_working', 'washer']
+    search_fields = ['washer__name']
+    list_editable = ['is_working', 'note']
+    list_per_page = 20

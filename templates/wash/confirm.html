@@ -8,25 +8,44 @@
         <div class="col-md-6">
             <div class="card border-dark border-2 bg-white">
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4 fw-bold text-dark">Подтверждение записи</h2>
+                    <h2 class="card-title text-center mb-4 fw-bold text-dark" style="font-size: 2.2rem; letter-spacing: -0.5px;">
+                        Подтверждение записи
+                    </h2>
                     
-                    <div class="mb-4">
-                        <p><span class="fw-bold">Услуга:</span> {{ service.name }}</p>
-                        <p><span class="fw-bold">Дата:</span> {{ slot_datetime|date:"d.m.Y" }}</p>
-                        <p><span class="fw-bold">Время:</span> {{ slot_datetime|time:"H:i" }}</p>
-                        <p><span class="fw-bold">Бокс:</span> {{ box.number }}</p>
-                        <p><span class="fw-bold">Мойщик:</span> {{ washer.name }}</p>
-                        <p><span class="fw-bold">Имя:</span> {{ client_name }}</p>
-                        <p><span class="fw-bold">Телефон:</span> {{ phone_number }}</p>
+                    <div class="mb-4" style="font-size: 1.15rem;">
+                        <div class="p-3 bg-light border border-dark mb-3" style="border-radius: 8px;">
+                            <p class="mb-2"><span class="fw-bold">Услуга:</span> {{ service.name }}</p>
+                            <p class="mb-2"><span class="fw-bold">Стоимость:</span> {{ service.price }} руб.</p>
+                            <p class="mb-0"><span class="fw-bold">Длительность:</span> {{ service.average_time|time:"H:i" }}</p>
+                        </div>
+                        
+                        <div class="p-3 bg-light border border-dark mb-3" style="border-radius: 8px;">
+                            <p class="mb-2"><span class="fw-bold">📅 Дата:</span> {{ slot_datetime|date:"d.m.Y" }}</p>
+                            <p class="mb-2"><span class="fw-bold">⏰ Время:</span> {{ slot_datetime|time:"H:i" }}</p>
+                            <p class="mb-0"><span class="fw-bold">📌 Бокс:</span> {{ box.number }}</p>
+                        </div>
+                        
+                        <div class="p-3 bg-light border border-dark mb-3" style="border-radius: 8px;">
+                            <p class="mb-2"><span class="fw-bold">👤 Мойщик:</span> {{ washer.name }}</p>
+                            <p class="mb-2"><span class="fw-bold">⭐ Категория:</span> {{ washer.category.get_name_display }}</p>
+                            <p class="mb-0"><span class="fw-bold">📞 Телефон мойщика:</span> {{ washer.phone }}</p>
+                        </div>
+                        
+                        <div class="p-3 bg-light border border-dark" style="border-radius: 8px;">
+                            <p class="mb-2"><span class="fw-bold">👤 Ваше имя:</span> {{ client_name }}</p>
+                            <p class="mb-0"><span class="fw-bold">📞 Ваш телефон:</span> {{ phone_number }}</p>
+                        </div>
                     </div>
                     
                     <form method="post">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-dark w-100 fw-bold">Подтвердить запись</button>
+                        <button type="submit" class="btn btn-dark w-100 fw-bold" style="padding: 14px; font-size: 1.15rem;">
+                            ✅ Подтвердить запись
+                        </button>
                     </form>
                     
                     <p class="mt-3 text-center">
-                        <a href="{% url 'times' service.id %}" class="text-dark fw-bold">Назад</a>
+                        <a href="{% url 'times' service.id %}" class="text-dark fw-bold text-decoration-none">← Назад</a>
                     </p>
                 </div>
             </div>

@@ -97,7 +97,7 @@ class Service(models.Model):
     class Meta:
         verbose_name = 'Услуга'
         verbose_name_plural = 'Услуги'
-        ordering = ['name']
+        ordering = ('name',)
 
     def __str__(self):
         return f'{self.name} - {self.price} руб.'
@@ -262,3 +262,25 @@ class Appointment(models.Model):
 
     def __str__(self):
         return f'{self.client_name} — {self.service.name} — {self.date.strftime("%d.%m.%Y %H:%M")}'
+
+
+class WasherSchedule(models.Model):
+    """График работы мойщика."""
+    washer = models.ForeignKey(
+        Washer,
+        on_delete=models.CASCADE,
+        related_name='schedules'
+    )
+    date = models.DateField('Рабочий день')
+    is_working = models.BooleanField('Работает', default=True)
+    note = models.CharField('Примечание', max_length=255, blank=True)
+
+    class Meta:
+        verbose_name = 'День графика'
+        verbose_name_plural = 'График работы'
+        unique_together = ('washer', 'date')
+        ordering = ['date']
+
+    def __str__(self):
+        status = 'Работает' if self.is_working else 'Выходной'
+        return f'{self.washer.name} - {self.date} ({status})'

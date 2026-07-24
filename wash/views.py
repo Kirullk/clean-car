@@ -17,7 +17,7 @@ from .utils import get_free_slots
 class ServiceView(ListView):
     template_name = 'wash/index.html'
     context_object_name = 'services'
-    paginate_by = 6
+    paginate_by = 5
 
     def get_queryset(self):
         return Service.objects.filter(
@@ -58,7 +58,9 @@ class SlotsTimeView(DetailView):
         context['dates'] = [
             timezone.now().date() + timedelta(days=i) for i in range(7)
         ]
-        context['boxes'] = Box.objects.filter(status=Box.StatusChoices.WORKING)
+        context['boxes'] = self.object.boxes.filter(
+            status=Box.StatusChoices.WORKING
+            )
         context['selected_box'] = box
         context['selected_date'] = date
 
@@ -145,6 +147,7 @@ class ConfirmAppointmentView(TemplateView):
 class AppointmentsView(LoginRequiredMixin, ListView):
     template_name = 'wash/appointments.html'
     context_object_name = 'appointments'
+    paginate_by = 5
 
     def get_queryset(self):
         return self.request.user.appointments.order_by('-date')

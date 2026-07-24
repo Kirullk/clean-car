@@ -1,5 +1,7 @@
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
+from phonenumber_field.modelfields import PhoneNumberField
+
 from django.db import models
 
 
@@ -23,11 +25,18 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
+    def make_random_password(self, length=10):
+        import random
+        import string
+        return ''.join(random.choices(string.ascii_letters + string.digits,
+                                      k=length))
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """Полностью своя модель пользователя"""
 
     email = models.EmailField(unique=True)
+    vk_id = models.CharField(max_length=25, blank=True, null=True)
     is_washer = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -43,3 +52,31 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class VkUser(models.Model):
+    """Модель для связи vk-пользователя с Django User."""
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='vk_profile'
+    )
+    vk_id = models.BigIntegerField(
+        'vk ID',
+        unique=True,
+        db_index=True
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    phone_number = PhoneNumberField(
+        'Телефон',
+        region='RU',
+        error_messages={
+            'invalid': 'Введите корректный номер телефона в формате +79991234567',
+            'max_length': 'Номер телефона слишком длинный',
+            'min_length': 'Номер телефона слишком короткий',
+        },
+        blank=True, null=True
+    )
+
+    def __str__(self):
+        return self.vk_id

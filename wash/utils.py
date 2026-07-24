@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.db.models import Count, Q
 from django.utils import timezone
 
-from .models import Appointment, Washer, WorkingHours
+from .models import Appointment, Washer, WorkingHours, WasherSchedule
 from .business_constants import BREAKTIME
 
 
@@ -22,6 +22,16 @@ def get_start_end_time(date):
         ))
 
 
+def is_working_day(washer, date):
+    """Проверяет, работает ли мойщик в указанную дату."""
+    try:
+        schedule = WasherSchedule.objects.get(washer=washer, date=date)
+        return schedule.is_working
+    except WasherSchedule.DoesNotExist:
+        # Если нет записи — считаем, что не работает.
+        return False
+
+
 def make_washer(service, current, duration):
     washers = Washer.objects.filter(
         category__in=service.washer_category.all(),
@@ -29,15 +39,25 @@ def make_washer(service, current, duration):
     )
     if not washers:
         return None
+    # Проверка, работает ли мойщик в нужный день.
+    available_washers = []
+    for washer in washers:
+        if is_working_day(washer, current.date()):
+            available_washers.append(washer)
+
+    if not available_washers:
+        return None
 
     week_ago = datetime.today() - timedelta(days=7)
-    washers = washers.annotate(
+    washers_with_count = Washer.objects.filter(
+        id__in=[w.id for w in available_washers]
+    ).annotate(
         appointments_count=Count(
             'appointments',
             filter=Q(appointments__date__gte=week_ago)
         )
     )
-    for washer in washers.order_by('appointments_count'):
+    for washer in washers_with_count.order_by('appointments_count'):
         for app in washer.appointments.filter(date__date=current.date()):
             end = app.date + timedelta(
                 hours=app.service.average_time.hour,
@@ -53,7 +73,7 @@ def make_washer(service, current, duration):
 def left_only_fresh_slots(date, slots):
     if date == timezone.now().date():
         now = timezone.now()
-        return [slot for slot in slots if slot > now]
+        return [(slot, washer) for slot, washer in slots if slot > now]
     return slots
 
 
@@ -77,7 +97,7 @@ def get_free_slots(service, date, box):
     # Далее начинается перебор записей.
     slots = []
     for appointment in all_appointments:
-        while current + service_duration <= appointment.date:
+        while current + service_duration + BREAKTIME <= appointment.date:
             washer = make_washer(service, current, service_duration)
             if washer:
                 slots.append((current, washer))
@@ -94,7 +114,6 @@ def get_free_slots(service, date, box):
     # до окончания работы автомойки заполняем список слотами.
     while current + service_duration <= end:
         washer = make_washer(service, current, service_duration)
-        print(washer, current, service_duration)
         if washer:
             slots.append((current, washer))
             current = current + service_duration
@@ -105,68 +124,3 @@ def get_free_slots(service, date, box):
     # Отсекаем завершившиеся записи.
     slots = left_only_fresh_slots(date, slots)
     return slots
-
-
-
-
-
-
-
-
-
-
-
-
-def generate_slots(service, date):
-    # Получаем мойщика, у которого наименьшее количество записей
-    # за последние 7 дней.
-    washer = choice_washer(service)
-    # Получаем все записи мойщика на определенное число.
-    all_appointments = washer.appointments.filter(date__date=date)
-    print(all_appointments)
-
-    day_of_week = date.weekday()
-    try:
-        wh = WorkingHours.objects.get(day=day_of_week, is_working=True)
-    except WorkingHours.DoesNotExist:
-        return []
-
-    open_time = timezone.make_aware(datetime.combine(date, wh.open_time))
-    close_time = timezone.make_aware(datetime.combine(date, wh.close_time))
-    break_duration = timedelta(minutes=BREAKTIME)
-
-    service_time = service.average_time
-    service_duration = timedelta(
-        hours=service_time.hour,
-        minutes=service_time.minute,
-        seconds=service_time.second
-    )
-
-    appointments = sorted(all_appointments, key=lambda a: a.date)
-    slots = []
-    current = open_time
-
-    for app in appointments:
-        app_start = app.date
-        app_end = app.service.average_time
-        app_end = timedelta(
-            hours=app_end.hour,
-            minutes=app_end.minute,
-            seconds=app_end.second
-        )
-        app_end = app_start + app_end + break_duration
-
-        while current + service_duration + break_duration <= app_start:
-            slots.append(current)
-            current += service_duration + break_duration
-
-        if current < app_end:
-            current = app_end
-
-    while current + service_duration + break_duration <= close_time:
-        slots.append(current)
-        current += service_duration + break_duration
-
-    slots = left_only_fresh_slots(date, slots)
-
-    return slots, washer
