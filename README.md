@@ -29,20 +29,18 @@ git clone https://github.com/Kirullk/clean-car.git
 
 ### 2. Создать и активировать виртуальное окружение.
 
-```bash
 python3 -m venv venv
 source venv/bin/activate  # для Linux/macOS
 # venv\Scripts\activate  # для Windows
 
 ### 3. Установить зависимости.
 
-```bash
 pip install -r requirements.txt
 
 ### 5. Выполнить миграции базы данных.
 
-```bash
 python manage.py migrate
+```
 
 
 
