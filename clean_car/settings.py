@@ -103,3 +103,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ],
 }
+
+ALLOWED_HOSTS = [
+    'www.milojop.pythonanywhere.com',
+    'milojop.pythonanywhere.com',
+]
