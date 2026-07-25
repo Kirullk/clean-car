@@ -7,12 +7,20 @@
                 
                 <ul class="list-unstyled">
                     <li class="mb-1">
-                        <span class="fw-bold">Цена:</span> 
+                        <span class="fw-bold">💰 Цена:</span> 
                         {{ service.price }} руб.
                     </li>
                     <li class="mb-1">
-                        <span class="fw-bold">Время мойки:</span> 
-                        {{ service.average_time|time:"H:i" }}
+                        <span class="fw-bold">⏱ Время мойки:</span> 
+                        {% with hours=service.average_time.hour minutes=service.average_time.minute %}
+                            {% if hours > 0 and minutes > 0 %}
+                                {{ hours }} ч {{ minutes }} мин
+                            {% elif hours > 0 %}
+                                {{ hours }} ч
+                            {% else %}
+                                {{ minutes }} мин
+                            {% endif %}
+                        {% endwith %}
                     </li>
                 </ul>
             </div>

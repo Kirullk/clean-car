@@ -17,15 +17,15 @@ from .utils import get_free_slots
 class ServiceView(ListView):
     template_name = 'wash/index.html'
     context_object_name = 'services'
-    paginate_by = 5
+    paginate_by = 6
 
     def get_queryset(self):
         return Service.objects.filter(
             is_active=True,
             washer_category__in=Washer.objects.filter(
                 is_active=True
-            ).values_list('category', flat=True).distinct()
-        ).prefetch_related('washer_category')
+            ).values_list('category', flat=True)
+        ).prefetch_related('washer_category').distinct()
 
 
 class SlotsTimeView(DetailView):
@@ -46,7 +46,9 @@ class SlotsTimeView(DetailView):
                                     number=box_number,
                                     status=Box.StatusChoices.WORKING)
         else:
-            box = Box.objects.filter(status=Box.StatusChoices.WORKING).first()
+            box = self.object.boxes.filter(
+                status=Box.StatusChoices.WORKING
+                ).first()
 
         if date_str:
             date = datetime.strptime(date_str, '%Y-%m-%d').date()

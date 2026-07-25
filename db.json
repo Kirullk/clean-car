@@ -40,6 +40,30 @@
     }
   },
   {
+    "model": "wash.box",
+    "pk": "B4",
+    "fields": {
+      "status": "working",
+      "max_height": "2.90"
+    }
+  },
+  {
+    "model": "wash.box",
+    "pk": "B5",
+    "fields": {
+      "status": "working",
+      "max_height": "2.40"
+    }
+  },
+  {
+    "model": "wash.box",
+    "pk": "B6",
+    "fields": {
+      "status": "working",
+      "max_height": "3.10"
+    }
+  },
+  {
     "model": "wash.washercategory",
     "pk": 1,
     "fields": {
@@ -229,47 +253,171 @@
     }
   },
   {
-    "model": "auth.user",
+    "model": "wash.service",
+    "pk": 6,
+    "fields": {
+      "name": "Чистка салона",
+      "description": "Глубокая чистка салона, удаление пятен, обработка кожи и ткани.",
+      "is_active": true,
+      "average_time": "00:40:00",
+      "boxes": ["B3", "B4"],
+      "price": "1200.00",
+      "washer_category": [1, 2],
+      "created_at": "2024-01-16T09:00:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 7,
+    "fields": {
+      "name": "Полировка фар",
+      "description": "Восстановление прозрачности фар, удаление царапин и помутнений.",
+      "is_active": true,
+      "average_time": "00:30:00",
+      "boxes": ["A2", "B5"],
+      "price": "800.00",
+      "washer_category": [2, 3],
+      "created_at": "2024-01-16T09:30:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 8,
+    "fields": {
+      "name": "Нанесение защитного воска",
+      "description": "Покрытие кузова защитным воском для долговременного блеска.",
+      "is_active": true,
+      "average_time": "00:45:00",
+      "boxes": ["A1", "B4", "B6"],
+      "price": "1500.00",
+      "washer_category": [2, 3],
+      "created_at": "2024-01-16T10:00:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 9,
+    "fields": {
+      "name": "Мойка колесных дисков",
+      "description": "Очистка дисков от грязи и тормозной пыли с применением спецсредств.",
+      "is_active": true,
+      "average_time": "00:25:00",
+      "boxes": ["B2", "B5"],
+      "price": "600.00",
+      "washer_category": [1],
+      "created_at": "2024-01-16T10:30:00Z"
+    }
+  },
+  {
+    "model": "wash.service",
+    "pk": 10,
+    "fields": {
+      "name": "Комплексный уход за салоном",
+      "description": "Полная чистка салона: ковры, сиденья, панель, стекла, обработка антибактериальным составом.",
+      "is_active": true,
+      "average_time": "01:30:00",
+      "boxes": ["B1", "B3", "B6"],
+      "price": "3000.00",
+      "washer_category": [3],
+      "created_at": "2024-01-16T11:00:00Z"
+    }
+  },
+  {
+    "model": "users.user",
     "pk": 1,
     "fields": {
-      "username": "washer1",
-      "password": "pbkdf2_sha256$...",
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "nikitos@wash.com",
+      "vk_id": "",
+      "is_washer": true,
       "is_active": true,
-      "is_staff": false,
-      "is_superuser": false
+      "is_staff": false
     }
   },
   {
-    "model": "auth.user",
+    "model": "users.user",
     "pk": 2,
     "fields": {
-      "username": "washer2",
-      "password": "pbkdf2_sha256$...",
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "ivan@wash.com",
+      "vk_id": "",
+      "is_washer": true,
       "is_active": true,
-      "is_staff": false,
-      "is_superuser": false
+      "is_staff": false
     }
   },
   {
-    "model": "auth.user",
+    "model": "users.user",
     "pk": 3,
     "fields": {
-      "username": "washer3",
-      "password": "pbkdf2_sha256$...",
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "petr@wash.com",
+      "vk_id": "",
+      "is_washer": true,
       "is_active": true,
-      "is_staff": false,
-      "is_superuser": false
+      "is_staff": false
     }
   },
   {
-    "model": "auth.user",
+    "model": "users.user",
     "pk": 4,
     "fields": {
-      "username": "washer4",
-      "password": "pbkdf2_sha256$...",
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "mariya@wash.com",
+      "vk_id": "",
+      "is_washer": true,
       "is_active": true,
-      "is_staff": false,
-      "is_superuser": false
+      "is_staff": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "alexey@wash.com",
+      "vk_id": "",
+      "is_washer": true,
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "ekaterina@wash.com",
+      "vk_id": "",
+      "is_washer": true,
+      "is_active": true,
+      "is_staff": false
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$SOMEHASH",
+      "last_login": null,
+      "is_superuser": false,
+      "email": "dmitry@wash.com",
+      "vk_id": "",
+      "is_washer": true,
+      "is_active": true,
+      "is_staff": false
     }
   },
   {
@@ -277,9 +425,9 @@
     "pk": 1,
     "fields": {
       "user": 1,
-      "name": "Иван Петров",
+      "name": "Никитос",
       "is_active": true,
-      "category": 1,
+      "category": 2,
       "hire_date": "2024-01-15",
       "phone": "+79991112233",
       "shift_type": 1
@@ -290,10 +438,10 @@
     "pk": 2,
     "fields": {
       "user": 2,
-      "name": "Алексей Смирнов",
+      "name": "Иван Петров",
       "is_active": true,
-      "category": 2,
-      "hire_date": "2024-03-20",
+      "category": 1,
+      "hire_date": "2024-02-20",
       "phone": "+79994445566",
       "shift_type": 2
     }
@@ -303,10 +451,10 @@
     "pk": 3,
     "fields": {
       "user": 3,
-      "name": "Мария Иванова",
+      "name": "Петр Сидоров",
       "is_active": true,
-      "category": 3,
-      "hire_date": "2023-10-01",
+      "category": 2,
+      "hire_date": "2024-03-10",
       "phone": "+79997778899",
       "shift_type": 1
     }
@@ -316,12 +464,401 @@
     "pk": 4,
     "fields": {
       "user": 4,
-      "name": "Дмитрий Козлов",
-      "is_active": false,
-      "category": 2,
-      "hire_date": "2024-05-10",
+      "name": "Мария Иванова",
+      "is_active": true,
+      "category": 3,
+      "hire_date": "2024-04-05",
       "phone": "+79990001122",
       "shift_type": 3
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 5,
+    "fields": {
+      "user": 5,
+      "name": "Алексей Смирнов",
+      "is_active": false,
+      "category": 2,
+      "hire_date": "2024-05-15",
+      "phone": "+79998887766",
+      "shift_type": 4
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 6,
+    "fields": {
+      "user": 6,
+      "name": "Екатерина Орлова",
+      "is_active": true,
+      "category": 3,
+      "hire_date": "2024-06-01",
+      "phone": "+79993332211",
+      "shift_type": 2
+    }
+  },
+  {
+    "model": "wash.washer",
+    "pk": 7,
+    "fields": {
+      "user": 7,
+      "name": "Дмитрий Козлов",
+      "is_active": true,
+      "category": 1,
+      "hire_date": "2024-07-01",
+      "phone": "+79991110022",
+      "shift_type": 1
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 1,
+    "fields": {
+      "washer": 1,
+      "date": "2026-07-24",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 2,
+    "fields": {
+      "washer": 1,
+      "date": "2026-07-25",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 3,
+    "fields": {
+      "washer": 1,
+      "date": "2026-07-26",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 4,
+    "fields": {
+      "washer": 1,
+      "date": "2026-07-27",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 5,
+    "fields": {
+      "washer": 1,
+      "date": "2026-07-28",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 6,
+    "fields": {
+      "washer": 2,
+      "date": "2026-07-24",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 7,
+    "fields": {
+      "washer": 2,
+      "date": "2026-07-25",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 8,
+    "fields": {
+      "washer": 2,
+      "date": "2026-07-26",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 9,
+    "fields": {
+      "washer": 2,
+      "date": "2026-07-27",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 10,
+    "fields": {
+      "washer": 2,
+      "date": "2026-07-28",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 11,
+    "fields": {
+      "washer": 3,
+      "date": "2026-07-24",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 12,
+    "fields": {
+      "washer": 3,
+      "date": "2026-07-25",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 13,
+    "fields": {
+      "washer": 3,
+      "date": "2026-07-26",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 14,
+    "fields": {
+      "washer": 3,
+      "date": "2026-07-27",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 15,
+    "fields": {
+      "washer": 3,
+      "date": "2026-07-28",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 16,
+    "fields": {
+      "washer": 4,
+      "date": "2026-07-24",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 17,
+    "fields": {
+      "washer": 4,
+      "date": "2026-07-25",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 18,
+    "fields": {
+      "washer": 4,
+      "date": "2026-07-26",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 19,
+    "fields": {
+      "washer": 4,
+      "date": "2026-07-27",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 20,
+    "fields": {
+      "washer": 4,
+      "date": "2026-07-28",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 21,
+    "fields": {
+      "washer": 5,
+      "date": "2026-07-24",
+      "is_working": false,
+      "note": "Не работает"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 22,
+    "fields": {
+      "washer": 5,
+      "date": "2026-07-25",
+      "is_working": false,
+      "note": "Не работает"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 23,
+    "fields": {
+      "washer": 5,
+      "date": "2026-07-26",
+      "is_working": false,
+      "note": "Не работает"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 24,
+    "fields": {
+      "washer": 5,
+      "date": "2026-07-27",
+      "is_working": false,
+      "note": "Не работает"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 25,
+    "fields": {
+      "washer": 5,
+      "date": "2026-07-28",
+      "is_working": false,
+      "note": "Не работает"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 26,
+    "fields": {
+      "washer": 6,
+      "date": "2026-07-24",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 27,
+    "fields": {
+      "washer": 6,
+      "date": "2026-07-25",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 28,
+    "fields": {
+      "washer": 6,
+      "date": "2026-07-26",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 29,
+    "fields": {
+      "washer": 6,
+      "date": "2026-07-27",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 30,
+    "fields": {
+      "washer": 6,
+      "date": "2026-07-28",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 31,
+    "fields": {
+      "washer": 7,
+      "date": "2026-07-24",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 32,
+    "fields": {
+      "washer": 7,
+      "date": "2026-07-25",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 33,
+    "fields": {
+      "washer": 7,
+      "date": "2026-07-26",
+      "is_working": true,
+      "note": ""
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 34,
+    "fields": {
+      "washer": 7,
+      "date": "2026-07-27",
+      "is_working": false,
+      "note": "Выходной"
+    }
+  },
+  {
+    "model": "wash.washerschedule",
+    "pk": 35,
+    "fields": {
+      "washer": 7,
+      "date": "2026-07-28",
+      "is_working": false,
+      "note": "Выходной"
     }
   }
 ]
